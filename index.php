@@ -47,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (!empty($error)): ?>
             <div class="bg-red-50 text-red-600 text-sm p-3 rounded-lg border border-red-100"><?= $error; ?></div>
         <?php endif; ?>
-<h1>This is test</h1>
         <form class="mt-8 space-y-6" action="login.php" method="POST">
             <div class="space-y-4">
                 <div>
