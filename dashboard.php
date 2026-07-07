@@ -44,7 +44,6 @@ $recent_logs = $pdo->query($recent_logs_query)->fetchAll();
 <div class="space-y-8">
     <!-- Top Greeting Section -->
     <div>
-        <h1>This is test</h1>
         <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Dashboard Overview</h1>
         <p class="text-sm text-gray-500">Real-time status metrics of your active inventory catalog operations.</p>
     </div>
