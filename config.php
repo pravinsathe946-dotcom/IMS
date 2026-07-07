@@ -1,10 +1,10 @@
 <?php
 // config.php
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root'); // Change to your DB username
-define('DB_PASS', '');     // Change to your DB password
-define('DB_NAME', 'inventory_db');
+define('DB_HOST', 'sql306.infinityfree.com');
+define('DB_USER', 'if0_42355711'); // Change to your DB username
+define('DB_PASS', 'Propravin123');     // Change to your DB password
+define('DB_NAME', 'if0_42355711_inventory');
 
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
