@@ -113,7 +113,7 @@ $categories = $stmt->fetchAll();
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea name="description" rows="3" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"><?= htmlspecialchars($edit_category['description']); ?></textarea>
+                        <textarea name="description" rows="3" class="resize-none mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"><?= htmlspecialchars($edit_category['description']); ?></textarea>
                     </div>
                     <div class="flex gap-2 pt-2">
                         <button type="submit" class="flex-1 py-2 px-4 text-sm font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition">Save Changes</button>
@@ -131,7 +131,7 @@ $categories = $stmt->fetchAll();
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea name="description" rows="3" placeholder="Optional category overview" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"></textarea>
+                        <textarea name="description" rows="3" placeholder="Optional category overview" class="resize-none mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"></textarea>
                     </div>
                     <button type="submit" class="w-full py-2 px-4 text-sm font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition pt-2">Add Category</button>
                 </form>

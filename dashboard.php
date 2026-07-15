@@ -66,10 +66,10 @@ $recent_logs = $pdo->query($recent_logs_query)->fetchAll();
         <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between">
             <div>
                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Inventory Value</p>
-                <h3 class="text-2xl font-bold text-gray-900 mt-1">$<?= number_format($total_value, 2); ?></h3>
+                <h3 class="text-2xl font-bold text-gray-900 mt-1">₹<?= number_format($total_value, 2); ?></h3>
             </div>
             <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 14a2 2 0 110-4h4"></path></svg>
+                <!-- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 14a2 2 0 110-4h4"></path></svg> --><span class="p-2 w-6 h-6">₹</span>
             </div>
         </div>
 

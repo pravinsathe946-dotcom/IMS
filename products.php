@@ -84,7 +84,7 @@ $products = $pdo->query($query)->fetchAll();
                                     <?= htmlspecialchars($prod['category_name'] ?: 'Uncategorized'); ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    $<?= number_format($prod['price'], 2); ?>
+                                    ₹<?= number_format($prod['price'], 2); ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-semibold">
                                     <?= $prod['quantity']; ?>
