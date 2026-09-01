@@ -1,6 +1,5 @@
 <?php
 require_once 'config.php';
-require_once 'product_mail.php';
 include 'includes/header.php';
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");

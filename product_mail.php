@@ -1,7 +1,26 @@
+```php
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
+// --------------------------------------------------
+// SECURITY: CRON SECRET
+// --------------------------------------------------
+
+// Create your own secret value.
+// Example: MyIMS_2026_Alert_8392
+$cronSecret = 'Q+C394wAkFH/24w1glTM2p3O7hXamFWaQjMYLUa/SiA=';
+
+// Only allow cron-job.org to execute this file
+if (
+    !isset($_GET['Q+C394wAkFH/24w1glTM2p3O7hXamFWaQjMYLUa/SiA=']) ||
+    $_GET['Q+C394wAkFH/24w1glTM2p3O7hXamFWaQjMYLUa/SiA='] !== $cronSecret
+) {
+    http_response_code(403);
+    exit('Access denied');
+}
+
 
 // --------------------------------------------------
 // LOAD PHPMailer
@@ -14,10 +33,8 @@ require __DIR__ . '/vendor/autoload.php';
 // DATABASE CONNECTION
 // --------------------------------------------------
 
-// CHANGE THESE TO YOUR LIVE SERVER DATABASE DETAILS
-
 $db_host = "sql306.infinityfree.com";
-$db_user = 'if0_42355711';
+$db_user = "if0_42355711";
 $db_pass = "Propravin123";
 $db_name = "if0_42355711_inventory";
 
@@ -29,7 +46,7 @@ $conn = new mysqli(
 );
 
 if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+    exit("Database connection failed");
 }
 
 $conn->set_charset("utf8mb4");
@@ -53,11 +70,17 @@ $result_low_stock = $conn->query($sql_low_stock);
 // CHECK IF LOW STOCK PRODUCTS EXIST
 // --------------------------------------------------
 
-if ($result_low_stock && $result_low_stock->num_rows > 0) {
+if (
+    $result_low_stock &&
+    $result_low_stock->num_rows > 0
+) {
 
     $productNames = "";
 
-    while ($low_stock_row = $result_low_stock->fetch_assoc()) {
+    while (
+        $low_stock_row =
+        $result_low_stock->fetch_assoc()
+    ) {
 
         $productName = htmlspecialchars(
             $low_stock_row['name'],
@@ -80,7 +103,8 @@ if ($result_low_stock && $result_low_stock->num_rows > 0) {
                 border-radius:5px;
             '>
                 <strong>{$productName}</strong>
-                - Quantity: <strong>{$quantity}</strong>
+                - Quantity:
+                <strong>{$quantity}</strong>
             </p>
         ";
     }
@@ -94,21 +118,21 @@ if ($result_low_stock && $result_low_stock->num_rows > 0) {
 
     try {
 
-        // SMTP
         $mail->isSMTP();
 
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
 
         // Gmail account
-        $mail->Username   = 'pravinsathe946@gmail.com';
+        $mail->Username = 'pravinsathe946@gmail.com';
 
         // NEW Gmail App Password
-        $mail->Password   = 'gfet wmuc muly npio';
+        $mail->Password = 'gfet wmuc muly npio';
 
-        // Gmail STARTTLS
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->SMTPSecure =
+            PHPMailer::ENCRYPTION_STARTTLS;
+
+        $mail->Port = 587;
 
 
         // --------------------------------------------------
@@ -117,19 +141,25 @@ if ($result_low_stock && $result_low_stock->num_rows > 0) {
 
         $mail->setFrom(
             'pravinsathe946@gmail.com',
-            'IMS Website'
+            'IMS Application'
         );
 
 
         // --------------------------------------------------
-        // RECEIVER
+        // RECEIVERS
         // --------------------------------------------------
 
         $mail->addAddress(
             'pravinsathe946@gmail.com',
-            'vinay.patil080@gmail.com ',
+            'vinay.patil080@gmail.com',
             'Admin'
         );
+
+        // Add another recipient like this:
+        // $mail->addAddress(
+        //     'another@example.com',
+        //     'Another Admin'
+        // );
 
 
         // --------------------------------------------------
@@ -138,7 +168,8 @@ if ($result_low_stock && $result_low_stock->num_rows > 0) {
 
         $mail->isHTML(true);
 
-        $mail->Subject = 'Low Stock Product Alert';
+        $mail->Subject =
+            'Low Stock Product Alert';
 
         $mail->Body = "
             <html>
@@ -151,15 +182,15 @@ if ($result_low_stock && $result_low_stock->num_rows > 0) {
                 <p>Hello Admin,</p>
 
                 <p>
-                    The following products have a quantity
-                    <strong>less than 5</strong>:
+                    The following products have a
+                    quantity <strong>less than 5</strong>:
                 </p>
 
                 {$productNames}
 
                 <p>
-                    Please check the inventory and replenish
-                    the stock if required.
+                    Please check the inventory and
+                    replenish the stock if required.
                 </p>
 
                 <p>
@@ -178,35 +209,18 @@ if ($result_low_stock && $result_low_stock->num_rows > 0) {
 
         $mail->send();
 
-        echo "
-            <p style='color:green;'>
-                <strong>Email sent successfully.</strong>
-            </p>
-        ";
+        echo "Low stock email sent successfully.";
 
     } catch (Exception $e) {
 
-        echo "
-            <p style='color:red;'>
-                <strong>Email could not be sent.</strong>
-            </p>
-        ";
+        http_response_code(500);
 
-        echo "
-            <p>
-                Mailer Error:
-                " . htmlspecialchars($mail->ErrorInfo) . "
-            </p>
-        ";
+        echo "Email could not be sent.";
     }
 
 } else {
 
-    echo "
-        <p style='color:green;'>
-            No products have quantity less than 5.
-        </p>
-    ";
+    echo "No products have quantity less than 5.";
 }
 
 
@@ -217,3 +231,4 @@ if ($result_low_stock && $result_low_stock->num_rows > 0) {
 $conn->close();
 
 ?>
+```
