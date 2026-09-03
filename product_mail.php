@@ -8,6 +8,18 @@ file_put_contents(
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+file_put_contents(
+    __DIR__ . '/cron_log.txt',
+    date('Y-m-d H:i:s') .
+    " | SOURCE=" .
+    ($_GET['source'] ?? 'manual') .
+    " | METHOD=" .
+    $_SERVER['REQUEST_METHOD'] .
+    " | USER_AGENT=" .
+    ($_SERVER['HTTP_USER_AGENT'] ?? 'unknown') .
+    "\n",
+    FILE_APPEND
+);
 
 // --------------------------------------------------
 // SECURITY: CRON SECRET
