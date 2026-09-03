@@ -1,5 +1,10 @@
-```php
+
 <?php
+file_put_contents(
+    __DIR__ . '/cron_log.txt',
+    date('Y-m-d H:i:s') . " - product_mail.php executed\n",
+    FILE_APPEND
+);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -151,7 +156,6 @@ if (
 
         $mail->addAddress(
             'pravinsathe946@gmail.com',
-            'vinay.patil080@gmail.com',
             'Admin'
         );
 
