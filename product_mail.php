@@ -2,7 +2,7 @@
 <?php
 file_put_contents(
     __DIR__ . '/cron_log.txt',
-    date('Y-m-d H:i:s') . " - product_mail.php executed\n",
+    date('Y-m-d H:i:s') . " - SCRIPT STARTED\n",
     FILE_APPEND
 );
 
@@ -69,6 +69,16 @@ $sql_low_stock = "
 ";
 
 $result_low_stock = $conn->query($sql_low_stock);
+file_put_contents(
+    __DIR__ . '/cron_log.txt',
+    date('Y-m-d H:i:s') .
+    " - SQL RESULT: " .
+    ($result_low_stock ? "SUCCESS" : "FAILED") .
+    " - ROWS: " .
+    ($result_low_stock ? $result_low_stock->num_rows : 0) .
+    "\n",
+    FILE_APPEND
+);
 
 
 // --------------------------------------------------
@@ -114,7 +124,11 @@ if (
         ";
     }
 
-
+file_put_contents(
+    __DIR__ . '/cron_log.txt',
+    date('Y-m-d H:i:s') . " - ABOUT TO SEND EMAIL\n",
+    FILE_APPEND
+);
     // --------------------------------------------------
     // SEND EMAIL
     // --------------------------------------------------
@@ -212,11 +226,23 @@ if (
         // --------------------------------------------------
 
         $mail->send();
+        file_put_contents(
+    __DIR__ . '/cron_log.txt',
+    date('Y-m-d H:i:s') . " - EMAIL SENT SUCCESSFULLY\n",
+    FILE_APPEND
+);
 
         echo "Low stock email sent successfully.";
 
     } catch (Exception $e) {
-
+    file_put_contents(
+        __DIR__ . '/cron_log.txt',
+        date('Y-m-d H:i:s') .
+        " - EMAIL FAILED: " .
+        $mail->ErrorInfo .
+        "\n",
+        FILE_APPEND
+    );
         http_response_code(500);
 
         echo "Email could not be sent.";
