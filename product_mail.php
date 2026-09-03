@@ -13,13 +13,13 @@ use PHPMailer\PHPMailer\Exception;
 $cronSecret = 'Q+C394wAkFH/24w1glTM2p3O7hXamFWaQjMYLUa/SiA=';
 
 // Only allow cron-job.org to execute this file
-if (
-    !isset($_GET['key']) ||
-    $_GET['key'] !== $cronSecret
-) {
-    http_response_code(403);
-    exit('Access denied');
-}
+//if (
+//    !isset($_GET['key']) ||
+ //   $_GET['key'] !== $cronSecret
+//) {
+ //   http_response_code(403);
+ //   exit('Access denied');
+//}
 
 
 // --------------------------------------------------
