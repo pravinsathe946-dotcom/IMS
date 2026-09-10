@@ -182,6 +182,7 @@ file_put_contents(
 
         $mail->addAddress(
             'pravinsathe946@gmail.com',
+            'vinay.patil080@gmail.com ',
             'Admin'
         );
 
