@@ -1,0 +1,18 @@
+name: Daily InfinityFree Cron Trigger
+
+on:
+  schedule:
+    # 18:30 UTC corresponds exactly to 12:00 AM IST (Indian Standard Time)
+    - cron: '30 18 * * *'
+  # Allows you to manually trigger the script from the GitHub Actions tab for testing
+  workflow_dispatch: 
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit Product Mail Script URL
+        run: |
+          curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+          -L https://vinpra.gt.tc/product_mail.php
+
