@@ -4,15 +4,49 @@ on:
   schedule:
     # 18:30 UTC corresponds exactly to 12:00 AM IST (Indian Standard Time)
     - cron: '30 18 * * *'
-  # Allows you to manually trigger the script from the GitHub Actions tab for testing
   workflow_dispatch: 
 
 jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Hit Product Mail Script URL
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-style: 'true'
+          node-version: '20'
+
+      - name: Install Playwright
         run: |
-          curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-          -L https://vinpra.gt.tc/product_mail.php
+          npm install playwright
+          npx playwright install chromium --with-deps
+
+      - name: Run Headless Browser to Trigger Mail
+        run: |
+          node -e "
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage();
+            
+            console.log('Navigating to website...');
+            await page.goto('https://vinpra.gt.tc/product_mail.php', { waitUntil: 'networkidle' });
+            
+            // Wait 5 seconds to allow the JavaScript challenge to decrypt, set the cookie, and reload
+            console.log('Waiting for security challenge to clear...');
+            await page.waitForTimeout(5000);
+            
+            // Capture the final visual/text state to verify execution
+            const textContent = await page.innerText('body');
+            console.log('Final Page Output Context:');
+            console.log(textContent);
+            
+            await browser.close();
+          })();
+          "
+
+
 
